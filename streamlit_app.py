@@ -8,7 +8,7 @@ def load_data():
         'Timestamp': [1, 2, 3, 4, 5],
         'User': ['User1', 'User2', 'User3', 'User4', 'User5'],
         'Action': ['Allowed', 'Blocked', 'Allowed', 'Blocked', 'Allowed'],
-        'Hostname': ['www.example.com', 'www.example.com', 'www.example.com', 'www.example.com', 'www.example.com']
+        'Hostname': ['www.example1.com', 'www.example2.com', 'www.example3.com', 'www.example4.com', 'www.example5.com']
     }
     return pd.DataFrame(data)
 

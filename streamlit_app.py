@@ -1,40 +1,36 @@
-import altair as alt
-import numpy as np
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
-"""
-# Welcome to Streamlit!
+def load_data():
+    # Replace this with your actual data loading logic
+    # For demonstration purposes, we'll use a sample DataFrame
+    data = {
+        'Timestamp': [1, 2, 3, 4, 5],
+        'User': ['User1', 'User2', 'User3', 'User4', 'User5'],
+        'Action': ['Allowed', 'Blocked', 'Allowed', 'Blocked', 'Allowed'],
+        'Hostname': ['www.example.com', 'www.example.com', 'www.example.com', 'www.example.com', 'www.example.com']
+    }
+    return pd.DataFrame(data)
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+def main():
+    st.title('Cortex Data Lake App')
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+    # Load data
+    data = load_data()
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+    # Display data table
+    st.dataframe(data)
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+    # Add filters
+    st.sidebar.header('Filters')
+    selected_hostname = st.sidebar.selectbox('Select Hostname', data['Hostname'].unique())
+    filtered_data = data[data['Hostname'] == selected_hostname]
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+    # Display filtered data table
+    st.subheader('Filtered Data')
+    st.dataframe(filtered_data)
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+    # Add charts or other visualizations as needed
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+if __name__ == '__main__':
+    main()
